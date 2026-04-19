@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SWAP BR — Compre seu carro com segurança</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --dark: #111111;
+    --card: #181818;
+    --white: #ffffff;
+    --yellow: #F5C400;
+    --green: #2DB84B;
+    --gray: #888888;
+    --border: rgba(255,255,255,0.08);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ─────────────────────────────── */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 5%;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: 1.8rem; letter-spacing: -1px;
+  }
+  .logo span.g { color: var(--green); }
+  .logo span.y { color: var(--yellow); }
+
+  nav { display: flex; gap: 28px; align-items: center; }
+  nav a {
+    text-decoration: none; color: #ccc; font-size: .9rem; font-weight: 500;
+    transition: color .2s;
+  }
+  nav a:hover { color: var(--yellow); }
+
+  .btn-nav {
+    background: var(--yellow); color: var(--black) !important;
+    padding: 8px 20px; border-radius: 6px; font-weight: 700 !important;
+    transition: opacity .2s !important;
+  }
+  .btn-nav:hover { opacity: .85; }
+
+  /* ── HERO ─────────────────────────────── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 120px 5% 80px;
+    position: relative; overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(245,196,0,.12) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(45,184,75,.07) 0%, transparent 50%);
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(245,196,0,.12); border: 1px solid rgba(245,196,0,.3);
+    padding: 6px 16px; border-radius: 999px;
+    font-size: .8rem; font-weight: 600; color: var(--yellow);
+    letter-spacing: .05em; text-transform: uppercase; margin-bottom: 28px;
+    animation: fadeUp .6s ease both;
+  }
+  .hero-badge::before { content: '●'; font-size: .5rem; }
+
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: clamp(2.8rem, 7vw, 5.5rem);
+    line-height: 1; letter-spacing: -1px; margin-bottom: 20px;
+    animation: fadeUp .6s .1s ease both;
+  }
+  .hero h1 em { color: var(--yellow); font-style: normal; }
+
+  .hero p {
+    max-width: 580px; font-size: 1.1rem; color: #aaa; line-height: 1.7;
+    margin-bottom: 40px; animation: fadeUp .6s .2s ease both;
+  }
+
+  .hero-cta {
+    display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+    animation: fadeUp .6s .3s ease both;
+  }
+
+  .btn-primary {
+    display: inline-block; padding: 16px 36px;
+    background: var(--yellow); color: var(--black);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800; font-size: 1.1rem; letter-spacing: .03em; text-transform: uppercase;
+    border-radius: 8px; text-decoration: none;
+    transition: transform .2s, opacity .2s;
+    box-shadow: 0 0 40px rgba(245,196,0,.3);
+  }
+  .btn-primary:hover { transform: translateY(-3px); opacity: .9; }
+
+  .btn-outline {
+    display: inline-block; padding: 16px 36px;
+    border: 2px solid rgba(255,255,255,.2); color: var(--white);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 1.1rem; letter-spacing: .03em; text-transform: uppercase;
+    border-radius: 8px; text-decoration: none;
+    transition: border-color .2s, transform .2s;
+  }
+  .btn-outline:hover { border-color: var(--yellow); transform: translateY(-3px); }
+
+  .hero-stats {
+    display: flex; gap: 48px; margin-top: 64px;
+    flex-wrap: wrap; justify-content: center;
+    animation: fadeUp .6s .4s ease both;
+  }
+  .stat { text-align: center; }
+  .stat strong {
+    display: block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 2.4rem; font-weight: 900; color: var(--yellow);
+  }
+  .stat span { font-size: .85rem; color: #777; text-transform: uppercase; letter-spacing: .05em; }
+
+  /* ── SECTION SHARED ─────────────────────── */
+  section { padding: 80px 5%; }
+
+  .section-label {
+    display: inline-block;
+    font-size: .75rem; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--yellow);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.05; margin-bottom: 16px;
+  }
+  .section-sub { color: #888; max-width: 520px; line-height: 1.7; }
+
+  /* ── DIVIDER ─────────────────────────────── */
+  .divider { height: 1px; background: var(--border); margin: 0 5%; }
+
+  /* ── PRODUCTS ─────────────────────────────── */
+  #produtos { background: var(--dark); }
+
+  .products-header { text-align: center; margin-bottom: 56px; }
+  .products-header .section-sub { margin: 0 auto; }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px; max-width: 1100px; margin: 0 auto;
+  }
+
+  .product-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px; overflow: hidden;
+    transition: transform .3s, border-color .3s, box-shadow .3s;
+    display: flex; flex-direction: column;
+  }
+  .product-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--yellow);
+    box-shadow: 0 20px 60px rgba(245,196,0,.12);
+  }
+
+  .product-cover {
+    width: 100%; aspect-ratio: 1/1;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    background: #1a1a1a;
+  }
+  .product-cover img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform .4s;
+  }
+  .product-card:hover .product-cover img { transform: scale(1.04); }
+
+  /* Fallback covers for when images aren't embedded */
+  .cover-1 { background: linear-gradient(135deg,#111 0%,#1a1a1a 100%); }
+  .cover-2 { background: linear-gradient(135deg,#0f0f0f 0%,#181818 100%); }
+  .cover-3 { background: linear-gradient(135deg,#111 0%,#1a1a1a 100%); }
+
+  .cover-mock {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 32px 24px; text-align: center;
+    position: relative;
+  }
+  .cover-mock::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    border-top: 60px solid var(--yellow);
+    border-right: 60px solid transparent;
+  }
+  .cover-arrow {
+    position: absolute; top: 6px; left: 6px;
+    font-size: 1.4rem; font-weight: 900; color: var(--black);
+    font-family: 'Barlow Condensed', sans-serif;
+    line-height: 1; transform: rotate(0deg);
+  }
+  .cover-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: 1.1rem; letter-spacing: .05em;
+    color: var(--white); text-transform: uppercase; margin-bottom: 8px;
+  }
+  .cover-title-big {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: 1.8rem; color: var(--yellow);
+    line-height: 1; text-transform: uppercase;
+  }
+  .cover-sub-box {
+    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
+    border-radius: 8px; padding: 8px 16px; margin-top: 12px;
+    font-size: .85rem; color: #ddd; font-weight: 500;
+  }
+
+  .product-info { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+
+  .product-badge {
+    display: inline-block; font-size: .7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .08em;
+    background: rgba(245,196,0,.15); color: var(--yellow);
+    border: 1px solid rgba(245,196,0,.3); padding: 3px 10px; border-radius: 4px;
+    margin-bottom: 12px;
+  }
+
+  .product-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800; font-size: 1.35rem; line-height: 1.15; margin-bottom: 10px;
+  }
+
+  .product-desc { font-size: .88rem; color: #888; line-height: 1.6; flex: 1; margin-bottom: 20px; }
+
+  .product-price {
+    display: flex; align-items: baseline; gap: 8px; margin-bottom: 18px;
+  }
+  .price-main {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: 2rem; color: var(--white);
+  }
+  .price-cents { font-size: 1rem; color: #ccc; font-weight: 600; }
+  .price-old {
+    font-size: .85rem; color: #555; text-decoration: line-through;
+  }
+
+  .btn-buy {
+    display: block; width: 100%; text-align: center;
+    padding: 14px; background: var(--yellow); color: var(--black);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800; font-size: 1rem; letter-spacing: .04em; text-transform: uppercase;
+    border-radius: 8px; text-decoration: none; border: none; cursor: pointer;
+    transition: opacity .2s, transform .2s;
+  }
+  .btn-buy:hover { opacity: .9; transform: scale(1.02); }
+
+  .btn-buy.secondary {
+    background: transparent; color: var(--yellow);
+    border: 2px solid var(--yellow);
+    margin-top: 8px;
+  }
+
+  /* ── COMBO ─────────────────────────────── */
+  #combo {
+    background: linear-gradient(135deg, #111 0%, #0f0f0f 100%);
+    text-align: center;
+  }
+
+  .combo-box {
+    max-width: 700px; margin: 0 auto;
+    background: var(--card); border: 1px solid rgba(245,196,0,.3);
+    border-radius: 20px; padding: 48px;
+    box-shadow: 0 0 80px rgba(245,196,0,.07);
+  }
+  .combo-box .section-label { display: block; }
+  .combo-price {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: 3.5rem; color: var(--yellow);
+    margin: 20px 0 8px;
+  }
+  .combo-saves {
+    display: inline-block; background: var(--green); color: #fff;
+    font-weight: 700; font-size: .85rem; padding: 4px 12px; border-radius: 4px;
+    margin-bottom: 28px;
+  }
+  .combo-items { list-style: none; text-align: left; margin-bottom: 32px; display: inline-block; }
+  .combo-items li {
+    display: flex; align-items: center; gap: 10px;
+    font-size: .95rem; padding: 8px 0; border-bottom: 1px solid var(--border); color: #ccc;
+  }
+  .combo-items li:last-child { border: none; }
+  .combo-items li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+  .combo-box .btn-primary { width: 100%; text-align: center; }
+
+  /* ── SOCIAL ─────────────────────────────── */
+  #redes { background: var(--black); text-align: center; }
+
+  .social-grid {
+    display: flex; flex-wrap: wrap; gap: 16px;
+    justify-content: center; max-width: 900px; margin: 40px auto 0;
+  }
+
+  .social-card {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px 24px; text-decoration: none; color: var(--white);
+    transition: border-color .2s, transform .2s;
+    min-width: 180px;
+  }
+  .social-card:hover { border-color: var(--yellow); transform: translateY(-4px); }
+  .social-icon { font-size: 1.6rem; }
+  .social-info { text-align: left; }
+  .social-name { font-weight: 700; font-size: .95rem; }
+  .social-handle { font-size: .78rem; color: #666; }
+
+  /* ── FAQ ─────────────────────────────── */
+  #faq { background: var(--dark); }
+
+  .faq-grid { max-width: 800px; margin: 40px auto 0; }
+
+  .faq-item {
+    border-bottom: 1px solid var(--border); padding: 20px 0; cursor: pointer;
+  }
+  .faq-q {
+    display: flex; justify-content: space-between; align-items: center;
+    font-weight: 600; font-size: 1rem;
+  }
+  .faq-q span { font-size: 1.2rem; color: var(--yellow); transition: transform .3s; }
+  .faq-a { font-size: .9rem; color: #888; line-height: 1.7; margin-top: 12px; display: none; }
+  .faq-item.open .faq-q span { transform: rotate(45deg); }
+  .faq-item.open .faq-a { display: block; }
+
+  /* ── FOOTER ─────────────────────────────── */
+  footer {
+    background: #050505; border-top: 1px solid var(--border);
+    padding: 40px 5%; text-align: center;
+  }
+  footer .logo { margin-bottom: 16px; display: inline-block; }
+  footer p { font-size: .8rem; color: #555; line-height: 1.8; }
+  footer a { color: #777; text-decoration: none; }
+  footer a:hover { color: var(--yellow); }
+
+  /* ── ANIMATIONS ─────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(32px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── MOBILE ─────────────────────────────── */
+  @media (max-width: 768px) {
+    nav { display: none; }
+    .hero-stats { gap: 28px; }
+    .combo-box { padding: 28px 20px; }
+    .product-cover { aspect-ratio: 4/3; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">SWAP<span class="g">B</span><span class="y">R</span></div>
+  <nav>
+    <a href="#produtos">Produtos</a>
+    <a href="#combo">Combo</a>
+    <a href="#redes">Redes Sociais</a>
+    <a href="#faq">FAQ</a>
+    <a href="#produtos" class="btn-nav">Comprar Agora</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">Educação Automotiva #1 do Brasil</div>
+  <h1>Compre seu carro<br>sem levar <em>gato por lebre</em></h1>
+  <p>Aprenda a avaliar documentação, débitos, mecânica e estrutura — e ainda transfira o veículo sem precisar de despachante.</p>
+  <div class="hero-cta">
+    <a href="#produtos" class="btn-primary">Ver Guias e Materiais</a>
+    <a href="https://www.youtube.com/@swap_br" target="_blank" class="btn-outline">▶ Assistir no YouTube</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><strong>12K+</strong><span>Inscritos YouTube</span></div>
+    <div class="stat"><strong>3</strong><span>Guias Completos</span></div>
+    <div class="stat"><strong>100%</strong><span>Prático e Direto</span></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRODUTOS -->
+<section id="produtos">
+  <div class="products-header reveal">
+    <span class="section-label">Nossos Materiais</span>
+    <h2 class="section-title">Guias que já salvaram<br>compradores de carro</h2>
+    <p class="section-sub">Materiais diretos ao ponto. Sem enrolação, sem fórmulas mágicas — só o que você precisa saber antes de comprar.</p>
+  </div>
+
+  <div class="products-grid">
+
+    <!-- Produto 1 -->
+    <div class="product-card reveal">
+      <div class="product-cover cover-1">
+        <div class="cover-mock">
+          <div class="cover-arrow">↘</div>
+          <div class="cover-tag">Guia</div>
+          <div class="cover-title-big">DEFINITIVO</div>
+          <div class="cover-sub-box">Como Comprar um Carro<br>Sem Prejuízo</div>
+        </div>
+      </div>
+      <div class="product-info">
+        <span class="product-badge">PDF · Ebook</span>
+        <h3 class="product-title">Guia Definitivo — Como Comprar um Carro Sem Prejuízo</h3>
+        <p class="product-desc">Tudo o que você precisa saber para não levar gato por lebre: documentação, histórico do veículo, sinais de batida, mau cheiro de negócio e muito mais.</p>
+        <div class="product-price">
+          <span class="price-main">R$&nbsp;37</span>
+          <span class="price-old">R$ 57</span>
+        </div>
+        <!-- SUBSTITUA O LINK ABAIXO PELO LINK DA HOTMART -->
+        <a href="SEU_LINK_HOTMART_PRODUTO_1" class="btn-buy" target="_blank">Quero Este Guia</a>
+      </div>
+    </div>
+
+    <!-- Produto 2 -->
+    <div class="product-card reveal">
+      <div class="product-cover cover-2">
+        <div class="cover-mock">
+          <div class="cover-arrow">↘</div>
+          <div class="cover-tag">Checklist</div>
+          <div class="cover-title-big">COMO AVALIAR<br>UM CARRO</div>
+        </div>
+      </div>
+      <div class="product-info">
+        <span class="product-badge">PDF · Checklist</span>
+        <h3 class="product-title">Checklist — Como Avaliar um Carro</h3>
+        <p class="product-desc">Um checklist completo para você levar na hora da visita e não esquecer nenhum item crítico. Estrutura, mecânica, documentação e elétrica.</p>
+        <div class="product-price">
+          <span class="price-main">R$&nbsp;17</span>
+          <span class="price-old">R$ 27</span>
+        </div>
+        <!-- SUBSTITUA O LINK ABAIXO PELO LINK DA HOTMART -->
+        <a href="SEU_LINK_HOTMART_PRODUTO_2" class="btn-buy" target="_blank">Quero Este Checklist</a>
+      </div>
+    </div>
+
+    <!-- Produto 3 -->
+    <div class="product-card reveal">
+      <div class="product-cover cover-3">
+        <div class="cover-mock">
+          <div class="cover-arrow">↘</div>
+          <div class="cover-tag">Guia Passo a Passo</div>
+          <div class="cover-title-big">COMO<br>TRANSFERIR<br>UM CARRO</div>
+        </div>
+      </div>
+      <div class="product-info">
+        <span class="product-badge">PDF · Ebook</span>
+        <h3 class="product-title">Como Transferir um Carro — Passo a Passo</h3>
+        <p class="product-desc">Economize até R$800 em despachante. Aprenda todo o processo de transferência de veículo sem precisar de intermediários, direto no DETRAN.</p>
+        <div class="product-price">
+          <span class="price-main">R$&nbsp;27</span>
+          <span class="price-old">R$ 47</span>
+        </div>
+        <!-- SUBSTITUA O LINK ABAIXO PELO LINK DA HOTMART -->
+        <a href="SEU_LINK_HOTMART_PRODUTO_3" class="btn-buy" target="_blank">Quero Este Guia</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- COMBO -->
+<section id="combo">
+  <div class="combo-box reveal">
+    <span class="section-label">🔥 Melhor Escolha</span>
+    <h2 class="section-title">Combo Completo<br>SWAP BR</h2>
+    <p class="section-sub" style="margin:0 auto 0;">Os 3 materiais por um preço especial. Tudo que você precisa do primeiro contato com o vendedor até a transferência concluída.</p>
+    <div class="combo-price">R$ 67</div>
+    <span class="combo-saves">Você economiza R$ 14</span>
+    <ul class="combo-items">
+      <li>Guia Definitivo — Como Comprar um Carro Sem Prejuízo</li>
+      <li>Checklist — Como Avaliar um Carro</li>
+      <li>Como Transferir um Carro — Passo a Passo</li>
+      <li>Acesso imediato após o pagamento</li>
+      <li>Suporte via e-mail</li>
+    </ul>
+    <!-- SUBSTITUA O LINK ABAIXO PELO LINK DO COMBO NA HOTMART -->
+    <a href="SEU_LINK_HOTMART_COMBO" class="btn-primary" target="_blank">Quero o Combo Completo — R$ 67</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- REDES SOCIAIS -->
+<section id="redes">
+  <div class="reveal" style="text-align:center">
+    <span class="section-label">Acompanhe</span>
+    <h2 class="section-title">Siga a SWAP BR</h2>
+    <p class="section-sub" style="margin:0 auto;">Conteúdo gratuito todo dia — dicas, memes e análises sobre o mercado automotivo brasileiro.</p>
+  </div>
+
+  <div class="social-grid">
+    <a href="https://www.youtube.com/@swap_br" target="_blank" class="social-card">
+      <span class="social-icon">▶️</span>
+      <div class="social-info">
+        <div class="social-name">YouTube</div>
+        <div class="social-handle">@swap_br</div>
+      </div>
+    </a>
+    <a href="https://www.instagram.com/swap_br/" target="_blank" class="social-card">
+      <span class="social-icon">📸</span>
+      <div class="social-info">
+        <div class="social-name">Instagram</div>
+        <div class="social-handle">@swap_br</div>
+      </div>
+    </a>
+    <a href="https://www.tiktok.com/@swap.br" target="_blank" class="social-card">
+      <span class="social-icon">🎵</span>
+      <div class="social-info">
+        <div class="social-name">TikTok</div>
+        <div class="social-handle">@swap.br</div>
+      </div>
+    </a>
+    <a href="https://www.facebook.com/profile.php?id=61587604616699" target="_blank" class="social-card">
+      <span class="social-icon">📘</span>
+      <div class="social-info">
+        <div class="social-name">Facebook</div>
+        <div class="social-handle">SWAP BR</div>
+      </div>
+    </a>
+    <a href="https://www.kwai.com/@swap_br" target="_blank" class="social-card">
+      <span class="social-icon">🎬</span>
+      <div class="social-info">
+        <div class="social-name">Kwai</div>
+        <div class="social-handle">@swap_br</div>
+      </div>
+    </a>
+    <a href="mailto:contato.swap.br@gmail.com" class="social-card">
+      <span class="social-icon">✉️</span>
+      <div class="social-info">
+        <div class="social-name">E-mail</div>
+        <div class="social-handle">contato.swap.br</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="reveal" style="text-align:center">
+    <span class="section-label">Dúvidas</span>
+    <h2 class="section-title">Perguntas Frequentes</h2>
+  </div>
+  <div class="faq-grid">
+    <div class="faq-item">
+      <div class="faq-q">Como recebo o material após a compra? <span>+</span></div>
+      <div class="faq-a">Imediatamente após a confirmação do pagamento você recebe um e-mail com o link para download direto. O processo é 100% automático.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Os materiais funcionam para qualquer estado do Brasil? <span>+</span></div>
+      <div class="faq-a">Sim! As informações sobre documentação e transferência seguem as regras do DETRAN nacional. Pequenas variações estaduais são indicadas no material.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Posso usar o checklist no celular? <span>+</span></div>
+      <div class="faq-a">Com certeza. O PDF é responsivo e funciona bem no celular. Você pode abrir direto na visita ao carro.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Precisa ter conhecimento mecânico para aplicar o checklist? <span>+</span></div>
+      <div class="faq-a">Não! O material foi criado exatamente para quem não entende de mecânica. Tudo é explicado de forma simples e visual.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Tem garantia? <span>+</span></div>
+      <div class="faq-a">Sim. Todos os produtos têm garantia de 7 dias (conforme CDC). Se não ficar satisfeito, é só pedir o reembolso.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">SWAP<span class="g">B</span><span class="y">R</span></div>
+  <p>
+    Educação automotiva para o brasileiro.<br>
+    <a href="mailto:contato.swap.br@gmail.com">contato.swap.br@gmail.com</a> ·
+    CNPJ: 44.200.534/0001-37<br>
+    <small style="color:#333">© 2025 SWAP BR. Todos os direitos reservados.</small>
+  </p>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => io.observe(el));
+
+  // FAQ toggle
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.querySelector('.faq-q').addEventListener('click', () => {
+      item.classList.toggle('open');
+    });
+  });
+</script>
+</body>
+</html>
